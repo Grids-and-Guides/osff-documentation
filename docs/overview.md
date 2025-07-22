@@ -1,3 +1,8 @@
+---
+sidebar_position: 1
+---
+# Overview
+
 Dual Serve is a minimalistic, developer-friendly TypeScript framework designed to simplify the creation, testing, and deployment of AWS Lambda functions.
 
 Key Features
