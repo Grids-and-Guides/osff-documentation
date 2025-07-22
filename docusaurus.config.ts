@@ -23,7 +23,7 @@ const config: Config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'Grids-and-Guides', // Usually your GitHub org/user name.
-  projectName: 'Dual Serve', // Usually your repo name.
+  projectName: 'osff-documentation', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
