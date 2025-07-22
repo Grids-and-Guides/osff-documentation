@@ -2,11 +2,9 @@
 sidebar_position: 2
 ---
 
-# OSFF - Open Serverless Function Framework
-
 # Getting Started
 
-Welcome to **OSFF (Open Serverless Function Framework)** – a lightweight, modular framework for building, organizing, and deploying AWS Lambda functions using TypeScript and CDK.
+Welcome to **Dual Serve** – a lightweight, modular framework for building, organizing, and deploying AWS Lambda functions using TypeScript and CDK.
 
 ### Prerequisites
 
