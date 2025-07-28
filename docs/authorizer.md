@@ -2,13 +2,13 @@
 sidebar_position: 6
 ---
 
-# Add New Function
-This guide walks you through the steps to add an authorizer in your serverless function to your project. For demonstration, we’ll build a simple `custom-auth` and attach this into our `getUser` API.
+# Authorizer
+This guide will walk you through the process of integrating a custom authorizer into your serverless function. For demonstration purposes, we’ll create a simple custom-auth authorizer and attach it to the getUser API endpoint.
 
 #### step 1
 Create Required Files and Folders
 
-Create the following folder structure inside the `src` directory:
+Begin by setting up the necessary folder structure inside your src directory:
 
 ```
 ├── src
@@ -16,11 +16,13 @@ Create the following folder structure inside the `src` directory:
         └── http
             └── authorizer.ts
 ```
+This structure helps organize your authorizer logic and keep your project maintainable.
+
 
 #### step 2
-Implement the Authorizer logic in `authorizer.ts`
+Implement the Authorizer Logic in authorizer.ts
 
-Following a custom authorizer is doing simple API key validation. but you can modifiy the logic as per your requiremnt.
+Next, implement the logic for your custom authorizer. In this example, the authorizer performs a basic API key validation. However, you can modify this logic to fit your specific authentication requirements.
 
 ``` ts
 // src/lambda-handler/http/authorizer.ts
@@ -73,7 +75,9 @@ export const handler = async (event: APIGatewayTokenAuthorizerEvent): Promise<AP
 };
 ```
 #### step 3
-Register the Authorizer function in `app-config.ts` file
+Register the Authorizer in `app-config.ts`
+
+Finally, register the custom authorizer function within your app-config.ts file. This step makes the authorizer available for use in your API routes.
 
 ``` ts
 // bin/app-config.ts
@@ -97,12 +101,16 @@ const authFunction = new FunctionConfig(
 
 export const appStack = new AppStack(
     ...
+    [new Authorizer("my-auth-func", "restApi", authFunction)], // here you can register the auth function with any name.
+    ...
 }
 
 ```
 
 #### step 4
-Now we can Attach wherever we want to add the authentication  
+Attach the Authorizer to Your API Route
+
+With the custom authorizer in place, you can now attach it to any API route where authentication is required.
 
 ``` ts
 // src/lambda-handler/http/user.config.ts
@@ -111,30 +119,20 @@ import { FunctionConfig, Trigger } from 'osff-dsl';
 import path from 'path';
 
 const getUserTrigger = new Trigger(
-    "http",             // trigger type http ot websocket 
-    "getUser",          // api endpoint
-    "GET",              // API method
-    "application/json", // response content type
-    "my-serverless-app-${self.stage}",  // API gateway name
-    "none"
+    "http",             
+    "getUser",          
+    "GET",              
+    "application/json", 
+    "my-serverless-app-${self.stage}",  
+    "my-auth-func"  // here you can pass your auth function name
   );
   
 export const getUserFunction = new FunctionConfig(
     "getUser-${self.stage}",    // function name
     "lambda.Runtime.NODEJS_22_X",   // runtime
     "index.handler",    // lambda handler
-    path.resolve(process.cwd(),"src/lambda-handler/http/getUser/getUser.ts"),   // source file
-    path.resolve(process.cwd(), "dist/lambda-handler/http/getUser/getUser.js"), // compile file
-    256,    // memory
-    10,     // concurrency
-    30,     // timeout
-    {       // environment variables 
-      "MONGODB_URI": "localhost:db",
-      "frontendUrl": "${env.frontendUrl}",
-      "functionName": "${currentFunction.name}",
-      "cors": "${env.cors}"
-    },
-    [getUserTrigger]    // triggers. you can add multiple triggers like http, S3, Cloud watch event
+   ...
+    [getUserTrigger]    
   );
 ```
 
