@@ -70,6 +70,7 @@ const getUserTrigger = new Trigger(
     "GET",              // API method
     "application/json", // response content type
     "my-serverless-app-${self.stage}",  // API gateway name
+    "none"
   );
   
 export const getUserFunction = new FunctionConfig(
