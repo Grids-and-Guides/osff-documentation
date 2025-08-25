@@ -83,25 +83,25 @@ Finally, register the custom authorizer function within your app-config.ts file.
 // bin/app-config.ts
 
 const authFunction = new FunctionConfig(
-    "auth-${self.stage}",
-    "lambda.Runtime.NODEJS_22_X",
-    "index.handler",
-    path.resolve(process.cwd(),"src/lambda-handler/http/authorizer.ts"),
-    path.resolve(process.cwd(), "dist/lambda-handler/http/authorizer/index.js"),
-    256,
-    10,
-    30,
-    {
-      "MONGODB_URI": "localhost:db",
-      "frontendUrl": "${env.frontendUrl}",
-      "functionName": "${currentFunction.name}",
-      "cors": "${env.cors}"
+    name: "auth-${self.stage}",
+    runtime: "lambda.Runtime.NODEJS_22_X",
+    handler: "index.handler",
+    srcFile: path.resolve(process.cwd(),"src/lambda-handler/http/authorizer.ts"),
+    output: path.resolve(process.cwd(), "dist/lambda-handler/http/authorizer/index.js"),
+    memory: 256,
+    concurrency: 10,
+    timeout: 30,
+    environmentVariable: {
+      MONGODB_URI: "localhost:db",
+      frontendUrl: "${env.frontendUrl}",
+      functionName: "${currentFunction.name}",
+      cors: "${env.cors}"
     }
   );
 
 export const appStack = new AppStack(
     ...
-    [new Authorizer("my-auth-func", "restApi", authFunction)], // here you can register the auth function with any name.
+    authorizer: [new Authorizer("my-auth-func", "restApi", authFunction)], // here you can register the auth function with any name.
     ...
 }
 
@@ -119,20 +119,20 @@ import { FunctionConfig, Trigger } from 'osff-dsl';
 import path from 'path';
 
 const getUserTrigger = new Trigger(
-    "http",             
-    "getUser",          
-    "GET",              
-    "application/json", 
-    "my-serverless-app-${self.stage}",  
-    "my-auth-func"  // here you can pass your auth function name
+    type: "http",             
+    endpoint: "getUser",          
+    method: "GET",              
+    responseType: "application/json", 
+    apiGatewayName: "my-serverless-app-${self.stage}",  
+    authorizer: "my-auth-func"  // here you can pass your auth function name
   );
   
 export const getUserFunction = new FunctionConfig(
-    "getUser-${self.stage}",    // function name
-    "lambda.Runtime.NODEJS_22_X",   // runtime
-    "index.handler",    // lambda handler
+    name: "getUser-${self.stage}",    // function name
+    runtime: "lambda.Runtime.NODEJS_22_X",   // runtime
+    handler: "index.handler",    // lambda handler
    ...
-    [getUserTrigger]    
+    triggers: [getUserTrigger]    
   );
 ```
 

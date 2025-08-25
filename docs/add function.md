@@ -65,30 +65,30 @@ import { FunctionConfig, Trigger } from 'osff-dsl';
 import path from 'path';
 
 const getUserTrigger = new Trigger(
-    "http",             // trigger type http ot websocket 
-    "getUser",          // api endpoint
-    "GET",              // API method
-    "application/json", // response content type
-    "my-serverless-app-${self.stage}",  // API gateway name
-    "none"
+    type: "http",             // trigger type http ot websocket 
+    endpoint: "getUser",          // api endpoint
+    method: "GET",              // API method
+    responseType: "application/json", // response content type
+    apiGatewayName: "my-serverless-app-${self.stage}",  // API gateway name
+    authorizer: "none"
   );
   
 export const getUserFunction = new FunctionConfig(
-    "getUser-${self.stage}",    // function name
-    "lambda.Runtime.NODEJS_22_X",   // runtime
-    "index.handler",    // lambda handler
-    path.resolve(process.cwd(),"src/lambda-handler/http/getUser/getUser.ts"),   // source file
-    path.resolve(process.cwd(), "dist/lambda-handler/http/getUser/getUser.js"), // compile file
-    256,    // memory
-    10,     // concurrency
-    30,     // timeout
-    {       // environment variables 
+    name: "getUser-${self.stage}",    // function name
+    runtime: "lambda.Runtime.NODEJS_22_X",   // runtime
+    handler: "index.handler",    // lambda handler
+    srcFile: path.resolve(process.cwd(),"src/lambda-handler/http/getUser/getUser.ts"),   // source file
+    output: path.resolve(process.cwd(), "dist/lambda-handler/http/getUser/getUser.js"), // compile file
+    memory: 256,    // memory
+    concurrency: 10,     // concurrency
+    timeout: 30,     // timeout
+    environmentVariable: {       // environment variables 
       "MONGODB_URI": "localhost:db",
       "frontendUrl": "${env.frontendUrl}",
       "functionName": "${currentFunction.name}",
       "cors": "${env.cors}"
     },
-    [getUserTrigger]    // triggers. you can add multiple triggers like http, S3, Cloud watch event
+    triggers: [getUserTrigger]    // triggers. you can add multiple triggers like http, S3, Cloud watch event
   );
 ```
 
@@ -105,7 +105,7 @@ import { getUserFunction } from "../src/lambda-handler/http/user/user.config";
 
 export const appStack = new AppStack(
     ...
-    [..., getUserFunction]
+    functions: [..., getUserFunction]
   );
 ```
 
