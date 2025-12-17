@@ -112,7 +112,7 @@ export const appStack = new AppStack(
 #### step 6
 You can now start the application locally:
 ```
-npm run start --stage local --port 3000
+npm run dev
 ```
 
 ### Using plop
@@ -152,5 +152,5 @@ This includes:
 #### Step 4: Run the Application
 You can now start the application locally:
 ```
-npm run start --stage local --port 3000
+npm run dev
 ```
