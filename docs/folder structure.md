@@ -3,8 +3,8 @@ sidebar_position: 3
 ---
 
 # Folder Structure 
+
 ```
-.
 ├── bin
 │   ├── app-config.ts   // All functions and resource configuration
 │   └── lambda-cdk.ts
@@ -14,11 +14,13 @@ sidebar_position: 3
 │   └── .local.env
 ├── node_modules
 ├── src
-│   └── lambda-handler
-        └── http       
+│   └── apis
+        └── hello
             ├── get-hello.ts
+            ├── get-hello.dto.ts // Define and validate API request data using Zod schemas.
             └── hello.config.ts // Use this file to register all functions of the module.
 
+│   ├── schema      // Use this folder to define database schemas and collection models.
 │   ├── services
 │   ├── shared
 │   └── config.ts
@@ -30,3 +32,6 @@ sidebar_position: 3
 ├── server.ts
 └── tsconfig.json
 ```
+#### Note:
+- Do not create functions in `index.ts`.
+- Use `Zod schemas` for request validation.

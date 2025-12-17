@@ -12,12 +12,10 @@ Begin by setting up the necessary folder structure inside your src directory:
 
 ```
 ├── src
-│   └── lambda-handler
-        └── http
-            └── authorizer.ts
+│   └── apis
+        └── authorizer.ts
 ```
 This structure helps organize your authorizer logic and keep your project maintainable.
-
 
 #### step 2
 Implement the Authorizer Logic in authorizer.ts
@@ -25,7 +23,7 @@ Implement the Authorizer Logic in authorizer.ts
 Next, implement the logic for your custom authorizer. In this example, the authorizer performs a basic API key validation. However, you can modify this logic to fit your specific authentication requirements.
 
 ``` ts
-// src/lambda-handler/http/authorizer.ts
+// src/apis/authorizer.ts
 
 import { APIGatewayAuthorizerResult, APIGatewayTokenAuthorizerEvent, AuthResponse, PolicyDocument } from 'aws-lambda';
 
@@ -86,8 +84,8 @@ const authFunction = new FunctionConfig(
     name: "auth-${self.stage}",
     runtime: "lambda.Runtime.NODEJS_22_X",
     handler: "index.handler",
-    srcFile: path.resolve(process.cwd(),"src/lambda-handler/http/authorizer.ts"),
-    output: path.resolve(process.cwd(), "dist/lambda-handler/http/authorizer/index.js"),
+    srcFile: path.resolve(process.cwd(),"src/apis/authorizer.ts"),
+    output: path.resolve(process.cwd(), "dist/apis/authorizer/index.js"),
     memory: 256,
     concurrency: 10,
     timeout: 30,
@@ -101,9 +99,9 @@ const authFunction = new FunctionConfig(
 
 export const appStack = new AppStack(
     ...
-    authorizer: [new Authorizer("my-auth-func", "restApi", authFunction)], // here you can register the auth function with any name.
+    authorizer: [new Authorizer({name: "my-auth-func", type: "restApi", authFunction: authFunction})], // here you can register the auth function with any name.
     ...
-}
+)
 
 ```
 
@@ -113,7 +111,7 @@ Attach the Authorizer to Your API Route
 With the custom authorizer in place, you can now attach it to any API route where authentication is required.
 
 ``` ts
-// src/lambda-handler/http/user.config.ts
+// src/apis/user/user.config.ts
 
 import { FunctionConfig, Trigger } from 'osff-dsl';
 import path from 'path';

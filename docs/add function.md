@@ -5,6 +5,8 @@ sidebar_position: 4
 # Add New Function
 This guide walks you through the steps to add a new serverless function to your project. For demonstration, we’ll build a simple `getUser` API.
 
+### Manual Addition
+
 #### step 1
 Create Required Files and Folders
 
@@ -12,15 +14,13 @@ Create the following folder structure inside the `src` directory:
 
 ```
 ├── src
-│   └── lambda-handler
-        └── http
-            └── user    // module name
-                ├── get-user.ts     // lambda handler
-                └── user.config.ts // Use this file to register all functions
+│   └── apis
+        └── user    // module name
+            ├── get-user.ts     // lambda handler
+            └── user.config.ts // Use this file to register all functions
     └── services 
         └── user
-            ├── list-user-service.ts // Business logic
-            └── user-types.ts   // Type definitions
+            └── list-user-service.ts // Business logic with types
 ```
 
 #### step 2
@@ -42,7 +42,7 @@ export function userList(){
 Create a handler that invokes the service and returns the result:
 
 ``` ts
-// src/lambda-handler/http/user-get
+// src/apis/user/get-user
 
 import { Handler } from 'aws-lambda';
 import { userList } from '../../../services/user/list-user-service';
@@ -59,7 +59,7 @@ export const handler: Handler = async (event, context) => {
 Define configuration settings like trigger type, runtime, environment variables, and more in user.config.ts:
 
 ``` ts
-// src/lambda-handler/http/user.config.ts
+// src/apis/user/user.config.ts
 
 import { FunctionConfig, Trigger } from 'osff-dsl';
 import path from 'path';
@@ -77,8 +77,8 @@ export const getUserFunction = new FunctionConfig(
     name: "getUser-${self.stage}",    // function name
     runtime: "lambda.Runtime.NODEJS_22_X",   // runtime
     handler: "index.handler",    // lambda handler
-    srcFile: path.resolve(process.cwd(),"src/lambda-handler/http/getUser/getUser.ts"),   // source file
-    output: path.resolve(process.cwd(), "dist/lambda-handler/http/getUser/getUser.js"), // compile file
+    srcFile: path.resolve(process.cwd(),"src/apis/user/getUser.ts"),   // source file
+    output: path.resolve(process.cwd(), "dist/apis/user/getUser.js"), // compile file
     memory: 256,    // memory
     concurrency: 10,     // concurrency
     timeout: 30,     // timeout
@@ -101,7 +101,7 @@ Include the new function in your application stack:
 // bin/app-config.ts
 
 ...
-import { getUserFunction } from "../src/lambda-handler/http/user/user.config";
+import { getUserFunction } from "../src/apis/user/user.config";
 
 export const appStack = new AppStack(
     ...
@@ -110,6 +110,46 @@ export const appStack = new AppStack(
 ```
 
 #### step 6
+You can now start the application locally:
+```
+npm run start --stage local --port 3000
+```
+
+### Using plop
+You can also add a new function using Plop, which generates the same structure automatically.
+
+#### Step 1: Run Plop
+```
+npx plop
+```
+
+#### Step 2: Provide Inputs
+```
+? Function name (ex: course): user
+? Trigger type (HTTP | WebSocket): HTTP
+? API endpoint (ex: course): user
+? HTTP Method (GET | POST | PUT | DELETE): GET
+```
+
+#### Step 3: Generated Structure
+```
+├── src
+│   └── apis
+│       └── user
+│           ├── user.ts
+│           └── user.config.ts
+```
+
+In addition, Plop will **automatically register the function** by updating:
+
+`bin/app-config.ts`
+This includes:
+- Importing the generated function
+- Adding it to the `functions` array
+
+> No manual registration is required when using Plop.
+
+#### Step 4: Run the Application
 You can now start the application locally:
 ```
 npm run start --stage local --port 3000
