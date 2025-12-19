@@ -11,7 +11,7 @@ Build the Project
 Compile your TypeScript code into JavaScript:
 
 ```
-npm run build
+npm run cdk-build
 ```
 
 #### step 2

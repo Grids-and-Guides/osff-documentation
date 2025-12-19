@@ -33,10 +33,25 @@ frontendUrl=localfrontend
 #### step 3
 Run the application.
 ```
-npm run start -- --stage local --port 3001
+npm run dev
 ```
 #### step 4
 You check the application by call the following get method
 ```
 GET localhost:<port>/hello
+```
+
+### Production Setup
+Use the following commands to build and run the application in production mode.
+
+#### Step 1
+Build for production
+```
+npm run express-build
+```
+
+#### Step 2
+Start the production server
+```
+npm run start
 ```
