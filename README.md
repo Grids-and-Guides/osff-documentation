@@ -1,41 +1,64 @@
-# Website
+# VitePress Documentation Site
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+This documentation website is built using [VitePress](https://vitepress.dev/), a modern static site generator built with Vue and Vite.
+
+## Prerequisites
+
+- Node.js 18.0.0 or higher
+- pnpm 8.0.0 or higher
 
 ## Installation
 
 ```bash
-yarn
+# Install dependencies
+pnpm i 
+```
+
+or
+
+```bash
+pnpm i --frozen-lockfile
 ```
 
 ## Local Development
 
 ```bash
-yarn start
+# Start the development server
+pnpm run dev
 ```
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+This command starts a local development server at `http://localhost:5173`. Most changes are reflected live without having to restart the server.
 
 ## Build
 
 ```bash
-yarn build
+# Build for production
+pnpm run build
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+This command generates static content into the `.vitepress/dist` directory, which can be served using any static site hosting service.
+
+## Preview Production Build
+
+```bash
+# Preview the production build locally
+pnpm run preview
+```
 
 ## Deployment
 
-Using SSH:
+### GitHub Pages
 
-```bash
-USE_SSH=true yarn deploy
-```
+1. Update the `base` and other necessary configurations in `.vitepress/config.js`
+2. Build the site:
+   ```bash
+   pnpm run build
+   ```
+3. Deploy to GitHub Pages using the `gh-pages` branch:
+   ```bash
+   npx gh-pages -d .vitepress/dist
+   ```
 
-Not using SSH:
+### Netlify/Vercel
 
-```bash
-GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+Both Netlify and Vercel support VitePress out of the box. You can connect your repository and configure the build command as `pnpm run build` with the publish directory set to `.vitepress/dist`.
