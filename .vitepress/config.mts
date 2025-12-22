@@ -4,7 +4,10 @@ import { navBar, sidebar } from '../config'
 export default defineConfig({
   srcDir: 'src',
   title: 'Dual Serve',
+  titleTemplate: 'Dual Serve Documentation',
+  cleanUrls: true,
   description: 'Dual runtime for Node.js',
+  base: '/osff-documentation/',
 
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
@@ -13,7 +16,10 @@ export default defineConfig({
     sidebar: sidebar(),
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/Grids-and-Guides/Dual-Serve' }
+      {
+        icon: 'github',
+        link: 'https://github.com/Grids-and-Guides/Dual-Serve'
+      }
     ]
   }
 })
