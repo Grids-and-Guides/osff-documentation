@@ -5,13 +5,13 @@ This documentation website is built using [VitePress](https://vitepress.dev/), a
 ## Prerequisites
 
 - Node.js 18.0.0 or higher
-- pnpm 8.0.0 or higher
+- pnpm 9.0.0 or higher
 
 ## Installation
 
 ```bash
 # Install dependencies
-pnpm i 
+pnpm i
 ```
 
 or

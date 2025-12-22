@@ -2,9 +2,12 @@
   "name": "osff-docs",
   "version": "0.1.0",
   "author": "Team Grids And Guides",
+  "packageManager": "pnpm@9.0.0",
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^25.0.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "postcss": "^8.5.6",
     "prettier": "^3.7.4",
     "tailwindcss": "^4.1.18",
@@ -16,10 +19,17 @@
     "build": "vitepress build",
     "preview": "vitepress preview",
     "preinstall": "npx only-allow pnpm",
-    "type": "vue-tsc --noEmit"
+    "type": "vue-tsc --noEmit",
+    "prepare": "husky",
+    "pre-commit": "lint-staged"
   },
   "dependencies": {
     "vitepress": "^1.6.4",
     "vue": "^3.5.26"
+  },
+  "lint-staged": {
+    "*.{js,ts,vue,css,md}": [
+      "prettier --write"
+    ]
   }
 }
