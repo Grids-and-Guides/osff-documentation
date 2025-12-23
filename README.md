@@ -4,7 +4,7 @@ This documentation website is built using [VitePress](https://vitepress.dev/), a
 
 ## Prerequisites
 
-- Node.js 18.0.0 or higher
+- Node.js 22.14.0 or higher
 - pnpm 9.0.0 or higher
 
 ## Installation
@@ -44,21 +44,3 @@ This command generates static content into the `.vitepress/dist` directory, whic
 # Preview the production build locally
 pnpm run preview
 ```
-
-## Deployment
-
-### GitHub Pages
-
-1. Update the `base` and other necessary configurations in `.vitepress/config.js`
-2. Build the site:
-   ```bash
-   pnpm run build
-   ```
-3. Deploy to GitHub Pages using the `gh-pages` branch:
-   ```bash
-   npx gh-pages -d .vitepress/dist
-   ```
-
-### Netlify/Vercel
-
-Both Netlify and Vercel support VitePress out of the box. You can connect your repository and configure the build command as `pnpm run build` with the publish directory set to `.vitepress/dist`.
