@@ -7,9 +7,12 @@ const guideSidebar: DefaultTheme.SidebarItem[] = [
     items: [
       { text: 'What is Dual Serve ?', link: 'intro' },
       { text: 'Getting Started', link: 'getting-started' },
-      { text: 'Add New Function', link: 'add-function' },
       { text: 'Folder Structure', link: 'folder-structure' },
-      { text: 'Deployment', link: 'deployment' }
+      { text: 'Add New Function', link: 'add-function' },
+      { text: 'Deployment', link: 'deployment' },
+      { text: 'Authorizer', link: 'authorizer' },
+      { text: 'Cors', link: 'cors' },
+      { text: 'Todo', link: 'to-do' }
     ]
   }
 ]
