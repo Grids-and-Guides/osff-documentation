@@ -1,0 +1,40 @@
+---
+name: "❓ Question"
+description: Ask a question about the project
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for your question! We'll do our best to help you out.
+        Please provide as much detail as possible about your question.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      description: What would you like to know?
+      placeholder: Type your question here...
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: Any additional context or information that might help us answer your question
+      placeholder: |
+        - What have you tried so far?
+        - Are there any related issues or discussions?
+        - Any error messages you're seeing?
+    validations:
+      required: false
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Your environment (e.g., OS, browser, version)
+      placeholder: e.g., Windows 10, Chrome 100
+    validations:
+      required: false
