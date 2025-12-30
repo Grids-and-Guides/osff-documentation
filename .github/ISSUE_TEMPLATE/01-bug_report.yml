@@ -1,0 +1,68 @@
+---
+name: "🐛 Bug Report"
+description: Report a bug you've found
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please help us fix this issue by providing as much information as possible.
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Which version of the project are you using?
+      placeholder: e.g., 1.0.0 or commit hash
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: |
+        - What happened?
+        - What did you expect to happen instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Help us reproduce the issue
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Logs/Output
+      description: Please include any relevant logs, screenshots, or error messages
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context about the problem here
+    validations:
+      required: false
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Your environment (OS, browser, version, etc.)
+      placeholder: e.g., Windows 10, Chrome 100, Node.js 16.x
+    validations:
+      required: true
