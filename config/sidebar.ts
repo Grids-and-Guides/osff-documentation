@@ -17,6 +17,7 @@ const guideSidebar: DefaultTheme.SidebarItem[] = [
   }
 ]
 
+
 const exampleSidebar: DefaultTheme.SidebarItem[] = [
   {
     text: 'Examples',
